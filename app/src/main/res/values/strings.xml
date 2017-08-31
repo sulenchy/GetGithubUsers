@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GetGithubUsers</string>
+    <string name="username">username</string>
+    <string name="userName">Sulenchy</string>
+    <string name="profileurl">profileURL</string>
+    <string name="share">Share</string>
+</resources>
