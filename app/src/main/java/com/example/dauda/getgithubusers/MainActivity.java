@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(MainActivity.this, " No internet connection "  , Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, " No internet connection "  , Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
                 //error.toString()
             }
