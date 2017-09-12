@@ -1,6 +1,7 @@
 package com.example.dauda.getgithubusers;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,25 +13,41 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class UserDetailsActivity extends AppCompatActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_user_details);
 
-        ImageView profileImage = (ImageView) findViewById(R.id.profileImage);
+
+
+        CircleImageView profileImage = (CircleImageView) findViewById(R.id.profileImage);
         TextView userNameTextView = (TextView) findViewById(R.id.profileName);
         Button shareProfile = (Button) findViewById(R.id.shareButton);
         TextView userUrl = (TextView) findViewById(R.id.profileUrl);
 
+        //adds the horizontal lines in the recyclervview
+        userUrl.setPaintFlags(userUrl.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+        //get intent
         Intent intent = getIntent();
+
+        //get the username from the intent
         final String userName = intent.getStringExtra(UserAdapter.KEY_NAME);
+
+        //gets the image fro intent
         String image = intent.getStringExtra(UserAdapter.KEY_IMAGE);
+
+        //get the profileurl from the intent
         final String profileUrl = intent.getStringExtra(UserAdapter.KEY_URL);
+        setTitle(userName);
 
-
+        //loads the image and set it on the holder.avatar_url using picasso library
         Picasso.with(this)
                 .load(image)
                 .into(profileImage);
@@ -38,8 +55,12 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         userNameTextView.setText(userName);
         userUrl.setText(profileUrl);
+        //test.setText(userName);
 
 
+        /**
+         * ClickListener onclick the developer profileurl
+         */
         userUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +72,9 @@ public class UserDetailsActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * clciklistener on click the share button
+         */
         shareProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +82,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
                 shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this awesome developer " + userName +
-                        ", " + profileUrl);
+                        " @ " + profileUrl);
                 Intent chooser = Intent.createChooser(shareIntent, "Share via");
                 if (shareIntent.resolveActivity(getPackageManager()) != null) {
                     startActivity(chooser);
@@ -66,4 +90,6 @@ public class UserDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

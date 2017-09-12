@@ -5,7 +5,7 @@ package com.example.dauda.getgithubusers;
  */
 
 public class Users {
-
+    //a users should
     private String userName;
     private String avatar_url;
     private String url;

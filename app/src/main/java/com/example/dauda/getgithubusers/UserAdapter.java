@@ -25,6 +25,8 @@ import com.squareup.picasso.Picasso;
  */
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
+
+
     public static final String KEY_NAME = "name";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_URL = "url";
@@ -32,11 +34,22 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private List<Users> users;
     private Context context;
 
+    /**
+     * the class constructor
+     * @param users
+     * @param context
+     */
     public UserAdapter(List<Users> users, Context context) {
         this.users = users;
         this.context = context;
     }
 
+    /**
+     * create a ViewHolder to hold R.layout.activity_all_users
+     * @param parent
+     * @param viewType
+     * @return View v
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -49,19 +62,25 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
+        ///gets the position of the a record from the arraylis users
         final Users usersList = users.get(position);
+
+        //get the Username from the UserList and set it into the userName textview
         holder.userName.setText(usersList.getUserName());
 
+        //loads the image and set it on the holder.avatar_url using picasso library
         Picasso.with(context)
                 .load(usersList.getAvatar_url())
                 .into(holder.avatar_url);
 
+
         holder.profileContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //get the position of the item clicked on the recycleview
                 Users usersList = users.get(position);
 
+                //creates an intent and passed three data via putextra
                 Intent skipIntent = new Intent(v.getContext(), UserDetailsActivity.class);
                 skipIntent.putExtra(KEY_NAME, usersList.getUserName());
                 skipIntent.putExtra(KEY_URL, usersList.getHtml_url());
@@ -72,11 +91,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     }
 
+    /**
+     * count the number of records in the arraylist users
+     * @return users.size
+     */
     @Override
     public int getItemCount() {
         return users.size();
     }
 
+    /**
+     * ViewHolder Class hold view on the recyclerView
+     */
     public class ViewHolder extends RecyclerView.ViewHolder  {
 
         public TextView userName;
@@ -89,7 +115,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
             userName = (TextView) itemView.findViewById(R.id.username);
             avatar_url = (ImageView) itemView.findViewById(R.id.profilePic);
-            html_url = (TextView) itemView.findViewById(R.id.url);
             profileContainer = (LinearLayout) itemView.findViewById(R.id.profilecontainer);
         }
 

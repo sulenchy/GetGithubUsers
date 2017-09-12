@@ -5,6 +5,11 @@ import android.os.Bundle;
 
 public class AllUsersActivity extends AppCompatActivity {
 
+
+    /**
+     * onCreate loads the activity_all_user
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

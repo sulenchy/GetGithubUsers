@@ -19,7 +19,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".AllUsersActivity" />
-        <activity android:name=".UserDetailsActivity"></activity>
+        <activity android:name=".UserDetailsActivity"
+            android:parentActivityName=".AllUsersActivity"
+            >
+        </activity>
     </application>
 
 </manifest>
