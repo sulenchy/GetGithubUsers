@@ -37,7 +37,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     /**
      * the class constructor
      * @param users
-     * @param context
+     * @param  context
      */
     public UserAdapter(List<Users> users, Context context) {
         this.users = users;
@@ -96,7 +96,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
      * @return users.size
      */
     @Override
-    public int getItemCount() {
+    public int getItemCount(){
         return users.size();
     }
 
@@ -109,6 +109,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         public ImageView avatar_url;
         public TextView html_url;
         public LinearLayout profileContainer;
+
 
         public ViewHolder(View itemView) {
             super(itemView);

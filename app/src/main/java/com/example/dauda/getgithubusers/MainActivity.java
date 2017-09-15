@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     //creating instance of List of Users
     private List<Users> users;
 
+    // Store a member variable for the listener
+    private EndLessRecyclerViewScrollListener scrollListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,11 +51,8 @@ public class MainActivity extends AppCompatActivity {
         //adds the divider to the recyclerView
         recyclerView.addItemDecoration(new DividerItemDecoration(this));
 
-        //Initializing the users; an instance of List<Users>
-        users = new ArrayList<>();
-
-        //calling the loadUrlData
         loadUrlData();
+
     }
 
     /**
@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
         // requesting for list of developers vis URL_DATA
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 URL_DATA, new Response.Listener<String>() {
-
             /**
              * gets the required data from the response i.e developer name(login)
              *      ,github url (html_url), developer avatar_url into users arraylist
@@ -79,18 +78,21 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 progressDialog.dismiss();
                 try {
-
+                    //converting the response from the github to jsonObject
                     JSONObject jsonObject = new JSONObject(response);
 
+                    //extracts the items object from the response
                     JSONArray array = jsonObject.getJSONArray("items");
 
+                    //Initializing the users; an instance of List<Users>
+                    users = new ArrayList<>();
+
                     for (int i = 0; i < array.length(); i++){
-
+                        //getting the login, html_url and avatar_url properties and values into Users object
                         JSONObject jo = array.getJSONObject(i);
-
-                        Users developer = new Users(jo.getString("login"), jo.getString("html_url"),
+                        Users user = new Users(jo.getString("login"), jo.getString("html_url"),
                                 jo.getString("avatar_url"));
-                        users.add(developer);
+                        users.add(user);
 
                     }
 
@@ -106,10 +108,12 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                //displayys a toast that displays no internet connection
                 Toast.makeText(MainActivity.this, " No internet connection "  , Toast.LENGTH_LONG).show();
+
+                //dismissess the progressDialog box showing loading...
                 progressDialog.dismiss();
-                //error.toString()
+
             }
         });
 
